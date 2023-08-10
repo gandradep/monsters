@@ -6,7 +6,8 @@ class App extends Component {
   constructor() {
     super(); //underline constructor from classes extending from.
     this.state = {
-      name: 'Gabri  el'
+      name: { firstName: 'Gabriel', lastName: 'Huang'},
+      company: 'Freelance'
     }
   }
 
@@ -16,10 +17,20 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Hi {this.state.name}
+            Hi {this.state.name.firstName} {this.state.name.lastName}, I work at {this.state.company}
           </p>
           <button onClick={() => {
-             this.setState({ name:'Changed'})
+             this.setState(
+              () => {
+                return {
+                  name: { firstName: 'Rafelle', lastName:'Kimchi'}
+                }
+             },
+             () =>{
+              //calback function runs after state is fully updated
+              console.log(this.state);
+             })
+
           }}> Change name</button>
         </header>
       </div>
