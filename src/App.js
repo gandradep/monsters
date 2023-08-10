@@ -6,33 +6,37 @@ class App extends Component {
   constructor() {
     super(); //underline constructor from classes extending from.
     this.state = {
-      name: { firstName: 'Gabriel', lastName: 'Huang'},
-      company: 'Freelance'
-    }
+      monsters: [],
+    };
   }
+
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then((response) => response.json())
+      .then((response) =>
+        this.setState(
+          () => {
+            return {monsters: response}
+          },
+          () => {
+            console.log(this.state)
+          }
+        )
+      );
+  }
+
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Hi {this.state.name.firstName} {this.state.name.lastName}, I work at {this.state.company}
-          </p>
-          <button onClick={() => {
-             this.setState(
-              () => {
-                return {
-                  name: { firstName: 'Rafelle', lastName:'Kimchi'}
-                }
-             },
-             () =>{
-              //calback function runs after state is fully updated
-              console.log(this.state);
-             })
-
-          }}> Change name</button>
-        </header>
+        {
+          this.state.monsters.map((monster) => {
+            return (
+            <div key={monster.id}>
+              <h1>{monster.name}</h1>
+              </div>);
+          })
+        }
       </div>
     );
   }
